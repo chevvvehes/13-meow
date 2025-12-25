@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Статистика книжного магазина</title>
+</head>
+<body>
+    <h1>Статистика магазина</h1>
+
+    <h2>1. Сколько раз покупал каждый клиент</h2>
+    <ul>
+    {% for data in customer_order_counts %}
+        <li>{{ data.name }} ({{ data.email }}): {{ data.order_count }} раз(а)</li>
+    {% endfor %}
+    </ul>
+
+    <h2>2. Суммы заказов</h2>
+    <ul>
+    {% for data in orders_with_amounts %}
+        <li>Заказ #{{ data.id }} от {{ data.createdAt|date('Y-m-d H:i:s') }} - {{ data.customer_name }} - {{ data.total_amount|number_format(2) }} руб.</li>
+    {% endfor %}
+    </ul>
+
+    <h2>3. Топ-3 самых жирных клиентов</h2>
+    <ol>
+    {% for data in top_customers %}
+        <li>{{ data.name }} ({{ data.email }}): {{ data.total_spent|number_format(2) }} руб.</li>
+    {% endfor %}
+    </ol>
+
+    <h2>4. Средняя сумма заказа</h2>
+    <p>{{ average_order_amount|number_format(2) }} руб.</p>
+
+    <h2>5. Самая дорогая книга</h2>
+    {% if most_expensive_book %}
+        <p>{{ most_expensive_book.title }} - {{ most_expensive_book.price|number_format(2) }} руб.</p>
+    {% else %}
+        <p>Книги не найдены.</p>
+    {% endif %}
+
+</body>
+</html>
